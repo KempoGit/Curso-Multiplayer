@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheckPoint;
     public LayerMask whatIsGround;
 
+    public Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,24 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, 0.2f, whatIsGround);
 
         theRB.velocity = new Vector2(velocity * moveSpeed, theRB.velocity.y);
+    }
+
+    private void FixedUpdate()
+    {
+        if(theRB.velocity.x < 0)
+        {
+            this.transform.localScale = new Vector3(-1f, 1f, 1f);
+        } else if (theRB.velocity.x > 0)
+        {
+            this.transform.localScale = Vector3.one;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        anim.SetBool("isGrounded", isGrounded);
+        anim.SetFloat("ySpeed", theRB.velocity.y);
+        anim.SetFloat("speed", Mathf.Abs(theRB.velocity.x));
     }
 
     public void Move(InputAction.CallbackContext context)
