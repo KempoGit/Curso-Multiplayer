@@ -65,4 +65,12 @@ public class PlayerController : MonoBehaviour
             theRB.velocity = new Vector2(theRB.velocity.x, theRB.velocity.y * 0.5f);
         }
     }
+
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            anim.SetTrigger("attack");
+        }
+    }
 }
